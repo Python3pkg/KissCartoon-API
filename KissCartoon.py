@@ -222,7 +222,7 @@ class KissCartoon:
             'recently_added': tree.xpath('//*[@id="tab-newest"]/div[1]')[0],
             'most_popular': tree.xpath('//*[@id="tab-mostview"]/div[1]')[0],
         }
-        for top, tab in tabs.items():
+        for top, tab in list(tabs.items()):
             for i in range(1, 11):
                 image = tab.xpath('div[{}]/a[1]/img/@src'.format(i))[0]
                 image = _absolute_url(self.url, image)
@@ -355,7 +355,7 @@ class CartoonList(Iterator):
         else:
             raise PaginatorError('No previous page.')
 
-    def next(self):
+    def __next__(self):
         if self.page < self.max_page:
             self.goto(self.page + 1)
         else:
@@ -366,7 +366,7 @@ class CartoonList(Iterator):
             item = self.series[self._index]
         except IndexError:
             try:
-                self.next()
+                next(self)
             except PaginatorError:
                 raise StopIteration()
             else:

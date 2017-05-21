@@ -174,7 +174,7 @@ class CartoonListTest(unittest.TestCase):
         with self.assertRaises(PaginatorError):
             kiss_list.back()
 
-        kiss_list.next()
+        next(kiss_list)
         self.assertEqual(kiss_list.page, 2)
         kiss_list.back()
         self.assertEqual(kiss_list.page, 1)
@@ -183,7 +183,7 @@ class CartoonListTest(unittest.TestCase):
         self.assertEqual(kiss_list.page, kiss_list.max_page)
 
         with self.assertRaises(PaginatorError):
-            kiss_list.next()
+            next(kiss_list)
 
         kiss_list.goto(kiss_list.max_page + 1)
         self.assertEqual(len(kiss_list.series), 0)
